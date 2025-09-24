@@ -1,0 +1,22 @@
+[project]
+name = "ava-backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pydantic",
+    "python-dotenv",
+    "slack-sdk",
+    "pydantic-ai"
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pre-commit",
+    "coverage",
+    "ruff",
+]
