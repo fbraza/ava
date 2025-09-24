@@ -10,7 +10,8 @@ dependencies = [
     "pydantic",
     "python-dotenv",
     "slack-sdk",
-    "pydantic-ai"
+    "pydantic-ai",
+    "httpx"
 ]
 
 [dependency-groups]
