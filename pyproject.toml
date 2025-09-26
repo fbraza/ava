@@ -3,14 +3,14 @@ name = "ava-backend"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 dependencies = [
     "fastapi",
     "uvicorn",
     "pydantic",
     "python-dotenv",
     "slack-sdk",
-    { name = "pydantic-ai", extras = ["openai"] },
+    "pydantic-ai[openai]",
     "httpx"
 ]
 

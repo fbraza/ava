@@ -1,0 +1,21 @@
+version: "3"
+
+tasks:
+  default:
+    desc: "Run all tasks"
+    deps: [sync, lint, test]
+
+  sync:
+    desc: "Install dependencies"
+    cmds:
+      - uv sync
+
+  lint:
+    desc: "Lint and format code"
+    cmds:
+      - uv run ruff check
+
+  test:
+    desc: "execute tests coverage"
+    cmds:
+      - coverage erase; coverage run --source . -m pytest tests/ -vv --durations=5; coverage report --skip-empty --omit "tests/*" -m
