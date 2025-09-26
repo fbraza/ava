@@ -13,9 +13,11 @@ tasks:
   lint:
     desc: "Lint and format code"
     cmds:
-      - source .venv/bin/activate && ruff check
+      - uv run ruff check
 
   test:
     desc: "execute tests coverage"
     cmds:
-      - source .venv/bin/activate && coverage erase; coverage run --source . -m pytest tests/ -vv --durations=5; coverage report --skip-empty --omit "tests/*" -m
+      - uv run python -m coverage erase
+      - uv run python -m coverage run --source . -m pytest tests/ -vv --durations=5
+      - uv run python -m coverage report --skip-empty --omit "tests/*" -m
