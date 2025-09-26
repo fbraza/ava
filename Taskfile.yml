@@ -18,4 +18,4 @@ tasks:
   test:
     desc: "execute tests coverage"
     cmds:
-      - coverage erase; coverage run --source . -m pytest tests/ -vv --durations=5; coverage report --skip-empty --omit "tests/*" -m
+      - uv run coverage erase; coverage run --source . -m pytest tests/ -vv --durations=5; coverage report --skip-empty --omit "tests/*" -m
