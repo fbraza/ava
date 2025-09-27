@@ -2,7 +2,7 @@ import os
 
 import pytest
 from dotenv import load_dotenv
-from pydantic_ai import Agent, RunContext, RunUsage
+from pydantic_ai import Agent, RunContext, RunUsage, models
 from pydantic_ai.models.test import TestModel
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
@@ -56,7 +56,7 @@ def test_post_message_with_ctx(channel: str, text: str, token: str | None):
         )
         tool_params = tools.SlackChatPostMessageParams(channel=channel, text=text)
         try:
-            response = slack.post_message(ctx=ctx, params=tool_params)  # type: ignore
+            response = slack.post_message(ctx=ctx, params=tool_params)
         except SlackApiError as exc:
             pytest.fail(f"Slack API error: {exc.response['error']}")
 
@@ -66,9 +66,13 @@ def test_post_message_with_ctx(channel: str, text: str, token: str | None):
 
 
 def test_slack_tools_are_synced():
-    test_model = TestModel()
-    agent = Agent(test_model, toolsets=[slack.slack_toolset])
-    _ = agent.run_sync("What tools are available?")
+    models.ALLOW_MODEL_REQUESTS = False
+    token = os.environ.get("SLACK_BOT_TOKEN")
+    client = WebClient(token=token)
+    test_model = TestModel(call_tools=[])
+    agent = Agent(test_model, toolsets=[slack.slack_toolset], deps_type=slack.Deps)
+    _ = agent.run_sync("What tools are available?", deps=slack.Deps(client=client))
+
     assert [
         t.name for t in test_model.last_model_request_parameters.function_tools
     ] == ["slack.chat.postMessage"]
