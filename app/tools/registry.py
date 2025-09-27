@@ -1,13 +1,5 @@
-from collections.abc import Callable
+from pydantic_ai.toolsets import FunctionToolset
 
-from slack_sdk.web.slack_response import SlackResponse
+from app.tools.slack import slack_toolset
 
-from app.models.tools import SlackChatPostMessageParams
-from app.tools.slack import post_message
-
-TOOLS: dict[str, dict[str, type | Callable[..., SlackResponse]]] = {
-    "slack.chat.postMessage": {
-        "schema": SlackChatPostMessageParams,
-        "fn": post_message,
-    },
-}
+TOOLS: dict[str, FunctionToolset] = {"slack.tools": slack_toolset}

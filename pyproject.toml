@@ -20,4 +20,5 @@ dev = [
     "pre-commit",
     "coverage",
     "ruff",
+    "ipython>=8.37.0",
 ]
