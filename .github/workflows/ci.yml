@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.8.13"
+          enable-cache: true
+          cache-suffix: "optional-suffix"
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Setup Task
+        uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+
+      - name: Install dependencies
+        run: task sync
+
+      - name: Format & lint
+        run: task lint
+
+      - name: Run tests
+        run: task test
+
+      - name: List available tasks (debug)
+        run: task --list
