@@ -20,4 +20,7 @@ slack_toolset = FunctionToolset()
 def post_message(
     ctx: RunContext[Deps], params: SlackChatPostMessageParams
 ) -> SlackResponse:
+    """
+    Use this function to post a message in the specified channel
+    """
     return ctx.deps.client.chat_postMessage(channel=params.channel, text=params.text)
