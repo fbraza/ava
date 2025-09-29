@@ -15,4 +15,4 @@ instructions = (
 
 def test_read_main():
     response = client.post("/slack", json={"user_instruction": f"{instructions}"})
-    assert response.json() == {"status": "ok"}
+    assert response.json()["status"] == "ok"

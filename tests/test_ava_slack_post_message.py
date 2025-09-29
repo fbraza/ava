@@ -16,15 +16,17 @@ _ = load_dotenv()
 @pytest.mark.parametrize(
     "channel,text,token",
     [
-        (
+        pytest.param(
             "sandbox",
             "Hello, AVA backend live smoke :rocket:",
             os.environ.get("SLACK_BOT_TOKEN"),
+            id="bot-token",
         ),
-        (
+        pytest.param(
             "general",
             "Hello, User is live smoke :rocket:",
             os.environ.get("SLACK_USER_TOKEN"),
+            id="user-token",
         ),
     ],
 )
