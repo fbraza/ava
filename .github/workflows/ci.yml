@@ -8,6 +8,11 @@ on:
     branches:
       - "main"
 
+env:
+  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  SLACK_USER_TOKEN: ${{ secrets.SLACK_USER_TOKEN }}
+  OPEN_ROUTER_TOKEN: ${{ secrets.OPEN_ROUTER_TOKEN }}
+
 jobs:
   test:
     runs-on: ubuntu-latest
