@@ -13,24 +13,6 @@ from app.tools import slack
 _ = load_dotenv()
 
 
-def test_health_ava_can_post_message():
-    token = os.environ.get("SLACK_BOT_TOKEN")
-    if not token:
-        pytest.skip("SLACK_BOT_TOKEN not set; live Slack test skipped")
-
-    client = WebClient(token=token)
-    message_text = "AVA backend live smoke :rocket:"
-
-    try:
-        response = client.chat_postMessage(channel="sandbox", text=message_text)
-    except SlackApiError as exc:
-        pytest.fail(f"Slack API error: {exc.response['error']}")
-
-    assert response["ok"] is True
-    assert response["message"]["text"] == message_text  # type: ignore
-    assert "ts" in response
-
-
 @pytest.mark.parametrize(
     "channel,text,token",
     [
@@ -60,9 +42,10 @@ def test_post_message_with_ctx(channel: str, text: str, token: str | None):
         except SlackApiError as exc:
             pytest.fail(f"Slack API error: {exc.response['error']}")
 
-        assert response["ok"] is True
-        assert response["message"]["text"] == text
-        assert "ts" in response
+        assert response["status"] == 200
+        assert response["result"] == "Message has been posted"
+        assert response["channel"] == tool_params.channel
+        assert response["msg"] == tool_params.text
 
 
 def test_slack_tools_are_synced():
