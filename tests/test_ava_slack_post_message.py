@@ -2,7 +2,7 @@ import os
 
 import pytest
 from dotenv import load_dotenv
-from pydantic_ai import Agent, RunContext, RunUsage, models
+from pydantic_ai import Agent, RunContext, RunUsage
 from pydantic_ai.models.test import TestModel
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
@@ -66,7 +66,6 @@ def test_post_message_with_ctx(channel: str, text: str, token: str | None):
 
 
 def test_slack_tools_are_synced():
-    models.ALLOW_MODEL_REQUESTS = False
     token = os.environ.get("SLACK_BOT_TOKEN")
     client = WebClient(token=token)
     test_model = TestModel(call_tools=[])
